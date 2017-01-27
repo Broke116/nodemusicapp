@@ -1,5 +1,11 @@
 <div class="row text-center">
     <h1>{{title}}</h1>
+    <h4>
+        <a class="fileInput">
+            <span class="glyphicon glyphicon-cloud-upload">Upload</span>
+            <input id="fileupload" type="file" name="files[]" data-url="/upload" multiple>
+        </a>
+    </h4>
 </div>
 <div id="musiclist">
     <table class="table table-condensed table-hover  table-responsive">
@@ -14,6 +20,7 @@
             </tr>
         </thead>
         <tbody>
+            {{# if tracks }}
             <tr>
                 <td>#</td>
                 <td>Name</td>
@@ -22,6 +29,11 @@
                 <td>Album</td>
                 <td>Genre</td>
             </tr>
+            {{else}}
+            <tr>
+                <td colspan="6">Track playlist is empty</td>
+            </tr>    
+            {{/if}}
         </tbody>
     </table>
 </div>
