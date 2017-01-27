@@ -2,7 +2,7 @@
     <h1>{{title}}</h1>
     <h4>
         <a class="fileInput">
-            <span class="glyphicon glyphicon-cloud-upload">Upload</span>
+            <span class="glyphicon glyphicon-cloud-upload"> Upload</span>
             <input id="fileupload" type="file" name="files[]" data-url="/upload" multiple>
         </a>
     </h4>
@@ -13,22 +13,24 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Time</th>
                 <th>Artist</th>
+                <th>Year</th>
                 <th>Album</th>
                 <th>Genre</th>
             </tr>
         </thead>
         <tbody>
             {{# if tracks }}
-            <tr>
-                <td>#</td>
-                <td>Name</td>
-                <td>Time</td>
-                <td>Artist</td>
-                <td>Album</td>
-                <td>Genre</td>
-            </tr>
+                {{#each tracks}}
+                <tr>
+                    <td>#</td>
+                    <td>{{this.name}}</td>
+                    <td>{{this.artist}}</td>
+                    <td>{{this.year}}</td>
+                    <td>{{this.album}}</td>
+                    <td>{{this.genre}}</td>
+                </tr>
+                {{/each}}
             {{else}}
             <tr>
                 <td colspan="6">Track playlist is empty</td>
