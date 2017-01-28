@@ -23,8 +23,8 @@
             {{# if tracks }}
                 {{# each tracks}}
                     <tr class="track">
-                        <td>{{@index}}</td>
-                        <td style="display: none">{{this.file}}</td>
+                        <td class="id">{{@index}}</td>
+                        <td class="file" style="display: none">{{this.file}}</td>
                         <td class="name">{{this.name}}</td>
                         <td>{{this.artist}}</td>
                         <td>{{this.year}}</td>
