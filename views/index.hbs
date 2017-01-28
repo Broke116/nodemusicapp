@@ -21,15 +21,21 @@
         </thead>
         <tbody>
             {{# if tracks }}
-                {{#each tracks}}
-                <tr>
-                    <td>#</td>
-                    <td>{{this.name}}</td>
-                    <td>{{this.artist}}</td>
-                    <td>{{this.year}}</td>
-                    <td>{{this.album}}</td>
-                    <td>{{this.genre}}</td>
-                </tr>
+                {{# each tracks}}
+                    <tr class="track">
+                        <td>{{@index}}</td>
+                        <td style="display: none">{{this.file}}</td>
+                        <td class="name">{{this.name}}</td>
+                        <td>{{this.artist}}</td>
+                        <td>{{this.year}}</td>
+                        <td>{{this.album}}</td>
+                        <td>{{this.genre}}</td>
+                        <td style="display: none">
+                            <audio controls>
+                                <source src="../uploads/{{this.file}}" type="audio/mpeg">
+                            </audio>
+                        </td>
+                    </tr>
                 {{/each}}
             {{else}}
             <tr>

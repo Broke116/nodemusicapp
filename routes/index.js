@@ -7,16 +7,14 @@ var Track = require('../models/track.js');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  var tracks = [];
   Track.find(function (err, data) {
-    tracks.push(data);
-    res.render('index', { title: 'Music application home page', tracks: tracks });
+    res.render('index', { title: 'Music application home page', tracks: data });
   });  
 });
 
 router.get('/music', (req, res) => {
   var fileId = req.query.id;
-  var file = __dirname + '/uploads/' + fileId;
+  var file = __dirname + '/public/uploads/' + fileId;
   fs.exists(file, (exists) => {
     if (exists) {
       var stream = fs.createReadStream(file);

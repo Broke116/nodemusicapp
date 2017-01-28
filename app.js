@@ -5,6 +5,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var expressHbs = require('express-handlebars');
 var mongoose = require('mongoose');
 var upload = require('jquery-file-upload-middleware');
 var mm = require('musicmetadata');
@@ -18,12 +19,12 @@ mongoose.connect('localhost:27017/musicapp');
 var Track = require('./models/track.js');
 
 upload.configure({
-  uploadDir: __dirname + '/uploads',
+  uploadDir: __dirname + '/public/uploads',
   uploadUrl: '/uploads'
 });
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.engine('.hbs', expressHbs({defaultLayout: 'layout', extname: '.hbs'}));
 app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
@@ -48,7 +49,7 @@ upload.on('abort', (fileInfo) => {
 });
 
 upload.on('end', (fileInfo) => {
-  var filePath = path.join(__dirname, 'uploads', fileInfo.name);
+  var filePath = path.join(__dirname, 'public' , 'uploads', fileInfo.name);
 
   if (fileInfo.name == fileInfo.originalName) {
     var parse = mm(fs.createReadStream(filePath), function (err, metadata) {
