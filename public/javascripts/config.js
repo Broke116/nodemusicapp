@@ -1,5 +1,7 @@
 $(document).ready(function () {
     var isPlaying = false;
+    var isPaused = false;
+    var audio = null;
 
     $('#fileupload').fileupload({
         dataType: 'json'
@@ -8,17 +10,20 @@ $(document).ready(function () {
     var $track = $('.track');
 
     $track.dblclick(function (e) {
-        e.preventDefault();
 
-        $.each($('audio'), function () {
-            this.pause();
-        });
+        if ($(e.target).parent().hasClass('highlight')) {
+            return;
+        }
 
         isPlaying = true;
-
+        
         //highlight the clicked track
-        $track.removeClass('highlight');
-        $(this).addClass('highlight');
+        //if (e.originalEvent !== undefined) {
+            $track.removeClass('highlight');
+            $(this).addClass('highlight');
+        //}
+
+        stopTrack(); 
 
         var highlightedTrackid = $(this).find('.id').text();
         var highlightedTrackname = $(this).find('.name').text();
@@ -38,29 +43,48 @@ $(document).ready(function () {
     function playTrack(Track) {
         console.log(Track.filename + " begin playing");
 
-        var audio = $("td.id:contains('" + Track.id + "')").parent().find('audio').get(0);
+        audio = $("td.id:contains('" + Track.id + "')").parent().find('audio').get(0);
 
-        audio.play();    
+        audio.play();
     }
 
-    $('#play').click(function(player){
-        if(isPlaying) return;
+    function stopTrack() {
+        $.each($('audio'), function () {
+            this.pause();
+        });
+    }
+
+    $('#play').click(function (player) {
+        if (isPlaying) {
+            return;
+        }
+
+        if(isPaused){
+            audio.play();
+            isPaused = false;
+            isPlaying = true;
+            return;
+        }
+        
         $('.track').first().trigger('dblclick');
     });
 
     $('#pause').click(function () {
+        console.log("track" + $(this).hasClass('highlight'));
+        var current = document.getElementsByClassName('highlight');
+        console.log("current " + current[0]);
         isPlaying = false;
-        clearInterval(latencyInterval);
-        socket.emit('pause');
+        isPaused = true;
+        stopTrack();
     });
 
-    $('#forward').click(function() {
+    $('#forward').click(function () {
         if (isPlaying) {
             $('.highlight').next().trigger('dblclick');
         }
     });
 
-     $('#backward').click(function() {
+    $('#backward').click(function () {
         if (isPlaying) {
             $('.highlight').prev().trigger('dblclick');
         }
