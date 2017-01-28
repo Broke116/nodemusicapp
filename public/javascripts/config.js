@@ -16,14 +16,14 @@ $(document).ready(function () {
         }
 
         isPlaying = true;
-        
+
         //highlight the clicked track
         //if (e.originalEvent !== undefined) {
-            $track.removeClass('highlight');
-            $(this).addClass('highlight');
+        $track.removeClass('highlight');
+        $(this).addClass('highlight');
         //}
 
-        stopTrack(); 
+        stopTrack();
 
         var highlightedTrackid = $(this).find('.id').text();
         var highlightedTrackname = $(this).find('.name').text();
@@ -46,6 +46,27 @@ $(document).ready(function () {
         audio = $("td.id:contains('" + Track.id + "')").parent().find('audio').get(0);
 
         audio.play();
+
+        $('#volumeSlider').slider({
+            orientation: "vertical",
+            value: audio.volume,
+            min: 0,
+            max: 1,
+            range: 'min',
+            animate: true,
+            step: .1,
+            slide: function (e, ui) {
+                audio.volume = ui.value;
+            }
+        });
+
+        
+
+        /*$('div#volumeSlider').hide();
+        $('div#mute').hover(function () {
+            console.log('hover');
+            $('div#volumeSlider').show();
+        });*/
     }
 
     function stopTrack() {
@@ -59,13 +80,13 @@ $(document).ready(function () {
             return;
         }
 
-        if(isPaused){
+        if (isPaused) {
             audio.play();
             isPaused = false;
             isPlaying = true;
             return;
         }
-        
+
         $('.track').first().trigger('dblclick');
     });
 

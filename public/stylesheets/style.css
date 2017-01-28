@@ -1,6 +1,7 @@
 body {
   padding: 20px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #fbfbfb;
 }
 
 a {
@@ -36,13 +37,19 @@ tr.highlight td {
 }
 
 /* footer navbar */
-.navbar-default .navbar-nav > li > a {
-  font-weight: 200;
+.footer {
+  background-color: #111;
+  color: #fff;
+}
+
+.navbar-default .navbar-nav > li > a {  
+  font-weight: 20;
   transition: background .2s ease;
+  color: #fff;
 }
 
 .navbar-default .navbar-text {
-  color: #000;
+  color: #fff;
 }
 
 .navbar-fixed-bottom {
@@ -51,4 +58,14 @@ tr.highlight td {
 
 .musicplayer {
   font-size: 16px;
+}
+
+#volumeSlider {
+  display: none;
+  position: absolute;
+  bottom: 45px;
+}
+
+#mute:hover #volumeSlider {
+    display:block;
 }
