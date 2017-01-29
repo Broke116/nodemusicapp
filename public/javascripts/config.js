@@ -3,13 +3,23 @@ $(document).ready(function () {
     var isPaused = false;
     var audio = null;
 
+    var $track = $('.track');
+    var $play = $('#play');
+    var $pause = $('#pause');
+    var $forward = $('#forward');
+    var $backward = $('#backward');
+
+    $play.show();
+    $pause.hide();
+
+    //fileupload init
     $('#fileupload').fileupload({
         dataType: 'json'
     });
-
-    var $track = $('.track');
+    
     document.getElementById('song-count').innerText = $track.length;
 
+    // actions when user double clicks the track on the list.
     $track.dblclick(function (e) {
 
         if ($(e.target).parent().hasClass('highlight')) {
@@ -26,6 +36,7 @@ $(document).ready(function () {
 
         stopTrack();
 
+        // highlighted track details
         var highlightedTrackid = $(this).find('.id').text();
         var highlightedTrackname = $(this).find('.name').text();
         var highlightedTrackfile = $(this).find('.file').text();
@@ -44,6 +55,10 @@ $(document).ready(function () {
     function playTrack(Track) {
         console.log(Track.filename + " begin playing");
 
+        $pause.show();
+        $play.hide();
+
+        // get highlighted track audio element and assign it to audio
         audio = $("td.id:contains('" + Track.id + "')").parent().find('audio').get(0);
 
         audio.play();
@@ -53,9 +68,11 @@ $(document).ready(function () {
             var minutes = parseInt(audio.duration / 60, 10);
             var seconds = parseInt(audio.duration % 60);
 
+            // write the calculated length of the track.
             document.getElementById('time').innerText = minutes + ":" + seconds;
         }
 
+        // jquery-ui slider init.
         $('#volumeSlider').slider({
             orientation: "vertical",
             value: audio.volume,
@@ -71,6 +88,7 @@ $(document).ready(function () {
     }
 
     function progress() {
+        // event listener function for audio's current time.
         var m = ~~(audio.currentTime / 60), s = ~~(audio.currentTime % 60);
         document.getElementById('currentTime').innerText = (m < 10 ? "0" + m : m) + ':' + (s < 10 ? "0" + s : s);
     }
@@ -81,11 +99,15 @@ $(document).ready(function () {
         });
     }
 
-    $('#play').click(function (player) {
+    $play.click(function (player) {
+        $pause.show();
+        $play.hide();
+        
         if (isPlaying) {
             return;
         }
 
+        // if isPaused = true continue with the paused track when play clicked.
         if (isPaused) {
             audio.play();
             isPaused = false;
@@ -93,22 +115,24 @@ $(document).ready(function () {
             return;
         }
 
-        $('.track').first().trigger('dblclick');
+        $track.first().trigger('dblclick');
     });
 
-    $('#pause').click(function () {
+    $pause.click(function () {
+        $pause.hide();
+        $play.show();
         isPlaying = false;
         isPaused = true;
         stopTrack();
     });
 
-    $('#forward').click(function () {
+    $forward.click(function () {
         if (isPlaying) {
             $('.highlight').next().trigger('dblclick');
         }
     });
 
-    $('#backward').click(function () {
+    $backward.click(function () {
         if (isPlaying) {
             $('.highlight').prev().trigger('dblclick');
         }
