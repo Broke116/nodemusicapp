@@ -1,9 +1,12 @@
 <footer class="navbar navbar-default navbar-fixed-bottom footer">
     <ul class="nav navbar-nav musicplayer">
         <li>
-            <a id="mute">
+            <a id="volume">
                 <span class="glyphicon glyphicon-volume-up"></span>
                 <div id="volumeSlider"></div>
+            </a>
+            <a id="mute">
+                <span class="glyphicon glyphicon-volume-off"></span>
             </a>
         </li>
         <li><a id="backward"><span class="glyphicon glyphicon-backward"></span></a></li>
@@ -13,7 +16,9 @@
     </ul>
     <p class="navbar-text">
         <span id="currentTime">0:00</span>
-        <span>/<span>
+        <span>
+            <progress id="seekbar" max="1" value="0"></progress>
+        <span>
         <span id="time">0:00</span>
         <span>&nbsp;</span>
         <span id="trackname">Track name</span>

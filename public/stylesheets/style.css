@@ -66,6 +66,11 @@ tr.highlight td {
   bottom: 45px;
 }
 
-#mute:hover #volumeSlider {
+#volume:hover #volumeSlider {
     display:block;
+}
+
+.progress {
+  height: 10px;
+  width: 100px;
 }

@@ -4,11 +4,16 @@ $(document).ready(function () {
     var audio = null;
 
     var $track = $('.track');
+    var $highlight = $('.highlight');
     var $play = $('#play');
     var $pause = $('#pause');
     var $forward = $('#forward');
     var $backward = $('#backward');
+    var $mute = $('#mute');
+    var $volume = $('#volume');
+    var progressBar = document.querySelector("progress");    
 
+    $mute.hide();
     $play.show();
     $pause.hide();
 
@@ -16,7 +21,7 @@ $(document).ready(function () {
     $('#fileupload').fileupload({
         dataType: 'json'
     });
-    
+
     document.getElementById('song-count').innerText = $track.length;
 
     // actions when user double clicks the track on the list.
@@ -85,12 +90,35 @@ $(document).ready(function () {
                 audio.volume = ui.value;
             }
         });
+
+        progressBar.addEventListener("click", seek);
+
+        $volume.click(function () {
+            audio.muted = !audio.muted;
+            $volume.hide();
+            $mute.show();
+        });
+
+        $mute.click(function () {
+            audio.muted = !audio.muted;
+            $mute.hide();
+            $volume.show();
+        });
+    }
+
+    function seek(e) {
+        var percent = e.offsetX / this.offsetWidth;
+        audio.currentTime = percent * audio.duration;
+        progressBar.value = percent / 100;
     }
 
     function progress() {
         // event listener function for audio's current time.
         var m = ~~(audio.currentTime / 60), s = ~~(audio.currentTime % 60);
         document.getElementById('currentTime').innerText = (m < 10 ? "0" + m : m) + ':' + (s < 10 ? "0" + s : s);
+
+        var $seekbar = $('#seekbar');
+        $seekbar.attr("value", audio.currentTime / audio.duration);
     }
 
     function stopTrack() {
@@ -102,7 +130,7 @@ $(document).ready(function () {
     $play.click(function (player) {
         $pause.show();
         $play.hide();
-        
+
         if (isPlaying) {
             return;
         }
@@ -128,13 +156,13 @@ $(document).ready(function () {
 
     $forward.click(function () {
         if (isPlaying) {
-            $('.highlight').next().trigger('dblclick');
+            $highlight.next().trigger('dblclick');
         }
     });
 
     $backward.click(function () {
         if (isPlaying) {
-            $('.highlight').prev().trigger('dblclick');
+            $highlight.prev().trigger('dblclick');
         }
     });
 });
