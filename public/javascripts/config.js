@@ -4,6 +4,9 @@ $(document).ready(function () {
     var audio = null;
 
     var $track = $('.track');
+    var $trackname = $('#trackname');
+    var $trackprogress = $('#trackprogress');
+    var $currentTime = $('#currentTime');
     var $play = $('#play');
     var $pause = $('#pause');
     var $forward = $('#forward');
@@ -15,6 +18,9 @@ $(document).ready(function () {
     $mute.hide();
     $play.show();
     $pause.hide();
+    $trackname.hide();
+    $trackprogress.hide();
+    $currentTime.hide();
 
     //fileupload init
     $('#fileupload').fileupload({
@@ -22,7 +28,7 @@ $(document).ready(function () {
         add: function (e, data) {
             var upload = true;
             var uploadFile = data.files[0];
-            if (!(/\.(mp3|wma|ogg)$/i).test(uploadFile.name)) {
+            if (!(/\.(mp3|wma|ogg|wav)$/i).test(uploadFile.name)) {
                 alert('You must select a music file');
                 upload = false;
             }
@@ -63,6 +69,9 @@ $(document).ready(function () {
         var trackname = document.getElementById('trackname');
 
         trackname.innerText = highlightedTrackname;
+        $trackname.show();
+        $trackprogress.show();
+        $currentTime.show();
 
         playTrack(Track);
     });
@@ -76,8 +85,12 @@ $(document).ready(function () {
         // get highlighted track audio element and assign it to audio
         audio = $("td.id:contains('" + Track.id + "')").parent().find('audio').get(0);
 
-        audio.play();
+        setTimeout(function () {
+            audio.play();
+        }, 1000);
+
         audio.addEventListener("timeupdate", progress, false);
+        audio.addEventListener("ended", playNext, false);
 
         if (audio.readyState > 0) {
             var minutes = parseInt(audio.duration / 60, 10);
@@ -116,7 +129,18 @@ $(document).ready(function () {
         });
     }
 
+    function playNext() {
+        //play next track when track has ended
+        if ($('.highlight').next().length != 0) {
+            $('.highlight').next().trigger('dblclick');
+            return;
+        }
+
+        $track.first().trigger('dblclick');
+    }
+
     function seek(e) {
+        // event listener for progressbar. when progress bar clicked go to clicked time
         var percent = e.offsetX / this.offsetWidth;
         audio.currentTime = percent * audio.duration;
         progressBar.value = percent / 100;
