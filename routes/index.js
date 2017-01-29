@@ -9,7 +9,7 @@ var Track = require('../models/track.js');
 router.get('/', function (req, res, next) {
   Track.find(function (err, data) {
     res.render('index', { title: 'Music application home page', tracks: data });
-  });  
+  });
 });
 
 router.get('/music', (req, res) => {

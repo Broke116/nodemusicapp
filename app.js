@@ -24,7 +24,7 @@ upload.configure({
 });
 
 // view engine setup
-app.engine('.hbs', expressHbs({defaultLayout: 'layout', extname: '.hbs'}));
+app.engine('.hbs', expressHbs({ defaultLayout: 'layout', extname: '.hbs' }));
 app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
@@ -49,7 +49,7 @@ upload.on('abort', (fileInfo) => {
 });
 
 upload.on('end', (fileInfo) => {
-  var filePath = path.join(__dirname, 'public' , 'uploads', fileInfo.name);
+  var filePath = path.join(__dirname, 'public', 'uploads', fileInfo.name);
 
   if (fileInfo.name == fileInfo.originalName) {
     var parse = mm(fs.createReadStream(filePath), function (err, metadata) {
@@ -71,7 +71,7 @@ upload.on('end', (fileInfo) => {
         });
       }); // track
     }); //parse
-  }else {
+  } else {
     console.log('error');
   }
 });

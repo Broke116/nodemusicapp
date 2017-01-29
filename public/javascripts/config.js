@@ -8,6 +8,7 @@ $(document).ready(function () {
     });
 
     var $track = $('.track');
+    document.getElementById('song-count').innerText = $track.length;
 
     $track.dblclick(function (e) {
 
@@ -46,6 +47,14 @@ $(document).ready(function () {
         audio = $("td.id:contains('" + Track.id + "')").parent().find('audio').get(0);
 
         audio.play();
+        audio.addEventListener("timeupdate", progress, false);
+
+        if (audio.readyState > 0) {
+            var minutes = parseInt(audio.duration / 60, 10);
+            var seconds = parseInt(audio.duration % 60);
+
+            document.getElementById('time').innerText = minutes + ":" + seconds;
+        }
 
         $('#volumeSlider').slider({
             orientation: "vertical",
@@ -59,14 +68,11 @@ $(document).ready(function () {
                 audio.volume = ui.value;
             }
         });
+    }
 
-        
-
-        /*$('div#volumeSlider').hide();
-        $('div#mute').hover(function () {
-            console.log('hover');
-            $('div#volumeSlider').show();
-        });*/
+    function progress() {
+        var m = ~~(audio.currentTime / 60), s = ~~(audio.currentTime % 60);
+        document.getElementById('currentTime').innerText = (m < 10 ? "0" + m : m) + ':' + (s < 10 ? "0" + s : s);
     }
 
     function stopTrack() {
@@ -91,9 +97,6 @@ $(document).ready(function () {
     });
 
     $('#pause').click(function () {
-        console.log("track" + $(this).hasClass('highlight'));
-        var current = document.getElementsByClassName('highlight');
-        console.log("current " + current[0]);
         isPlaying = false;
         isPaused = true;
         stopTrack();
