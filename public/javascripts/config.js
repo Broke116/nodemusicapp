@@ -4,14 +4,13 @@ $(document).ready(function () {
     var audio = null;
 
     var $track = $('.track');
-    var $highlight = $('.highlight');
     var $play = $('#play');
     var $pause = $('#pause');
     var $forward = $('#forward');
     var $backward = $('#backward');
     var $mute = $('#mute');
     var $volume = $('#volume');
-    var progressBar = document.querySelector("progress");    
+    var progressBar = document.querySelector("progress");
 
     $mute.hide();
     $play.show();
@@ -19,7 +18,18 @@ $(document).ready(function () {
 
     //fileupload init
     $('#fileupload').fileupload({
-        dataType: 'json'
+        dataType: 'json',
+        add: function (e, data) {
+            var upload = true;
+            var uploadFile = data.files[0];
+            if (!(/\.(mp3|wma|ogg)$/i).test(uploadFile.name)) {
+                alert('You must select a music file');
+                upload = false;
+            }
+            if (upload == true) {
+                data.submit();
+            }
+        }
     });
 
     document.getElementById('song-count').innerText = $track.length;
@@ -156,13 +166,13 @@ $(document).ready(function () {
 
     $forward.click(function () {
         if (isPlaying) {
-            $highlight.next().trigger('dblclick');
+            $('.highlight').next().trigger('dblclick');
         }
     });
 
     $backward.click(function () {
         if (isPlaying) {
-            $highlight.prev().trigger('dblclick');
+            $('.highlight').prev().trigger('dblclick');
         }
     });
 });
