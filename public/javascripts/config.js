@@ -199,4 +199,10 @@ $(document).ready(function () {
             $('.highlight').prev().trigger('dblclick');
         }
     });
+
+    /* bootstrap modal js code */
+    $('#myModal').on('show.bs.modal', function(e) {
+        var musicId = $(e.relatedTarget).data('music-id');
+        $(e.currentTarget).find('input[name="musicId"]').val(musicId);
+    });
 });
