@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
   });
 });
 
-router.get('/music', (req, res) => {
+router.get('/music', (req, res, next) => {
   var fileId = req.query.id;
   var file = __dirname + '/public/uploads/' + fileId;
   fs.exists(file, (exists) => {
@@ -26,15 +26,24 @@ router.get('/music', (req, res) => {
   });
 });
 
-router.get('/upload', (req, res) => {
+router.get('/track/:id', (req, res, next) => {
+  var trackId = req.params.id;
+
+  Track.findById(trackId, (err, data) => {
+    if (err) return err;
+    res.send(data);
+  });
+});
+
+router.get('/upload', (req, res, next) => {
   res.redirect('/');
 });
 
-router.put('/upload', (req, res) => {
+router.put('/upload', (req, res, next) => {
   res.redirect('/');
 });
 
-router.delete('/upload', (req, res) => {
+router.delete('/upload', (req, res, next) => {
   res.redirect('/');
 });
 

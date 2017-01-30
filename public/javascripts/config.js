@@ -201,8 +201,15 @@ $(document).ready(function () {
     });
 
     /* bootstrap modal js code */
-    $('#myModal').on('show.bs.modal', function(e) {
+    $('#myModal').on('show.bs.modal', function (e) {
         var musicId = $(e.relatedTarget).data('music-id');
-        $(e.currentTarget).find('input[name="musicId"]').val(musicId);
+        $.get('/track/' + musicId, function (data) {
+            console.log(data);
+            $("#inputName").val(data.name);
+            $("#inputArtist").val(data.artist);
+            $("#inputYear").val(data.year);
+            $("#inputAlbum").val(data.album);
+            $("#inputGenre").val(data.genre);
+        });
     });
 });
