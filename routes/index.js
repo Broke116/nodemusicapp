@@ -35,6 +35,21 @@ router.get('/track/:id', (req, res, next) => {
   });
 });
 
+// get form data and update track
+router.post('/track', (req, res, next) => {
+  var updatedTrack = {
+    genre: req.body.genre,
+    album: req.body.album,
+    year: req.body.year,
+    artist: req.body.artist,
+    name: req.body.tname
+  };
+
+  Track.findByIdAndUpdate(req.body.trackId, updatedTrack, (err, data) => {
+    res.redirect('/');
+  });
+});
+
 router.get('/upload', (req, res, next) => {
   res.redirect('/');
 });

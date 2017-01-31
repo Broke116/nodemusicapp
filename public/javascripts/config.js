@@ -204,12 +204,12 @@ $(document).ready(function () {
     $('#myModal').on('show.bs.modal', function (e) {
         var musicId = $(e.relatedTarget).data('music-id');
         $.get('/track/' + musicId, function (data) {
-            console.log(data);
             $("#inputName").val(data.name);
             $("#inputArtist").val(data.artist);
             $("#inputYear").val(data.year);
             $("#inputAlbum").val(data.album);
             $("#inputGenre").val(data.genre);
+            $("#trackId").val(musicId);
         });
     });
 });

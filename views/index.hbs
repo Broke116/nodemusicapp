@@ -56,34 +56,35 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Edit details</h4>
             </div>
-            <div class="modal-body">
-                 <form>
-                     <div class="form-group">
-                        <label for="tname">Track name</label>
-                        <input type="text" class="form-control" id="inputName" name="tname" placeholder="Trackname">
-                     </div>
-                     <div class="form-group">
-                        <label for="artist">Artist</label>
-                        <input type="text" class="form-control" id="inputArtist" name="artist" placeholder="Artist">
-                     </div>
-                     <div class="form-group">
-                        <label for="year">Year</label>
-                        <input type="text" class="form-control" id="inputYear" name="year" placeholder="Year">
-                     </div>
-                     <div class="form-group">
-                        <label for="album">Album</label>
-                        <input type="text" class="form-control" id="inputAlbum" name="album" placeholder="Album">
-                     </div>
-                     <div class="form-group">
-                        <label for="genre">Genre</label>
-                        <input type="text" class="form-control" id="inputGenre" name="genre" placeholder="Genre">
-                     </div>
-                </form>                 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+            <form action="/track" method="POST">
+                <div class="modal-body">            
+                       <input id="trackId" name="trackId" type="hidden">     
+                        <div class="form-group">
+                            <label for="tname">Track name</label>
+                            <input type="text" class="form-control" id="inputName" name="tname" placeholder="Trackname">
+                        </div>
+                        <div class="form-group">
+                            <label for="artist">Artist</label>
+                            <input type="text" class="form-control" id="inputArtist" name="artist" placeholder="Artist">
+                        </div>
+                        <div class="form-group">
+                            <label for="year">Year</label>
+                            <input type="text" class="form-control" id="inputYear" name="year" placeholder="Year">
+                        </div>
+                        <div class="form-group">
+                            <label for="album">Album</label>
+                            <input type="text" class="form-control" id="inputAlbum" name="album" placeholder="Album">
+                        </div>
+                        <div class="form-group">
+                            <label for="genre">Genre</label>
+                            <input type="text" class="form-control" id="inputGenre" name="genre" placeholder="Genre">
+                        </div>              
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Save changes" />
+                </div>
+            </form>
             </div>
         </div>
     </div>
