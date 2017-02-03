@@ -89,6 +89,7 @@ $(document).ready(function () {
             audio.play();
         }, 1000);
 
+        // audio events
         audio.addEventListener("timeupdate", progress, false);
         audio.addEventListener("ended", playNext, false);
 

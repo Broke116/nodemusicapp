@@ -36,7 +36,14 @@
                                 <source src="../uploads/{{this.file}}" type="audio/mpeg">
                             </audio>
                         </td>
-                        <td><a href="#myModal" data-toggle="modal" data-music-id="{{this._id}}"><span class="glyphicon glyphicon-edit"></span></a><td>
+                        <td>
+                            <a href="#myModal" data-toggle="modal" data-music-id="{{this._id}}">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                            <a href="/remove/{{this._id}}" data-music-id="{{this._id}}">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                        <td>
                     </tr>                    
                     </div>
                     </div>

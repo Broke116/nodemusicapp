@@ -41,11 +41,15 @@ app.use('/users', users);
 
 
 upload.on('error', (err) => {
-  if (err) return console.log(err);
+  if (err) return console.log("upload error " + err);
 });
 
 upload.on('abort', (fileInfo) => {
   console.log('Abborted upload of ' + fileInfo.name);
+});
+
+upload.on('delete', (fileInfo, req , res) => {
+  
 });
 
 upload.on('end', (fileInfo) => {
@@ -55,18 +59,18 @@ upload.on('end', (fileInfo) => {
     var parse = mm(fs.createReadStream(filePath), function (err, metadata) {
       if (err) throw err;
       Track.findOne({ 'name': metadata.title }, function (err, track) {
-        if (err) return console.log(err);
+        if (err) return console.log("track find error: " + err);
         if (track) return console.log('Email is already in use');
-
+        
         var newTrack = new Track();
         newTrack.file = fileInfo.name;
         newTrack.name = metadata.title;
         newTrack.artist = metadata.artist;
         newTrack.year = metadata.year;
         newTrack.album = metadata.album;
-        newTrack.genre = metadata.genre;
+        newTrack.genre = ((metadata.genre != "") ? metadata.genre : "default");
         newTrack.save(function (err, result) {
-          if (err) return console.log(err);
+          if (err) return console.log("metadata error: " + err);
           return path.resolve('/');
         });
       }); // track

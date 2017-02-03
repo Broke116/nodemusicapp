@@ -46,6 +46,16 @@ router.post('/track', (req, res, next) => {
   };
 
   Track.findByIdAndUpdate(req.body.trackId, updatedTrack, (err, data) => {
+    if (err) return err;
+    res.redirect('/');
+  });
+});
+
+router.get('/remove/:id', (req, res, next) => {
+  //TODO alert confirm
+  var trackId = req.params.id;
+  Track.findByIdAndRemove(trackId, (err, result) => {
+    if (err) return err;
     res.redirect('/');
   });
 });
